@@ -3,20 +3,21 @@
  * Module dependencies
  */
 
+
 var exec = require('child_process').exec
 
 module.exports = function (args, socket) {
-  mount(args, function (err, cid) {
+  var cid = args.shift();
+  stop(cid, function (err, cid) {
     if (err) { socket.send(err); }
     else { socket.send(cid); }
   });
 };
 
-function mount (args, fn) {
-  var cmd = 'spotlet-mount '+ args.concat(['-d']).join(' ');
+function stop (cid, fn) {
+  var cmd = 'docker stop '+ cid;
   var child = exec(cmd, function (err, stderr, stdout) {
-    if (err) { fn(err); }
-    else { fn(null, stderr || stdout); }
+    fn(err, stderr || stdout);
   });
 }
 

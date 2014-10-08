@@ -5,14 +5,14 @@
 
 var exec = require('child_process').exec
   , path = require('path')
-  , exit = process.exit
 
 var SPOTLET_INDEX = process.env.SPOTLET_INDEX || '/usr/local/spotlets';
 
-module.exports = function (args) {
+module.exports = function (args, socket) {
   var endpoint = args.shift();
   clone(endpoint, function (err, dest) {
-
+    if (err) { socket.send(err); }
+    else { socket.send(dest); }
   });
 };
 
