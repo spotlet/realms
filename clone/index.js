@@ -10,14 +10,23 @@ var SPOTLET_INDEX = process.env.SPOTLET_INDEX || '/usr/local/spotlets';
 
 module.exports = function (args, socket) {
   var endpoint = args.shift();
+
+  if ('-h' == endpoint || '--help' == endpoint) {
+    return help(socket);
+  }
+
   clone(endpoint, function (err, dest) {
     if (err) { socket.send(err); }
     else { socket.send(dest); }
   });
 };
 
+function help (socket) {
+  socket.send("error: usage: clone [-h] <endpoint>");
+}
+
 function clone (endpoint, fn) {
-  var name = path.basename(endpoint); name = name.replace(path.extname(name), '');
+  var name = path.basename(endpoint); name = name.replace('.git', '');
   var dest = SPOTLET_INDEX +'/'+ name;
   var cmd = 'rm -rf '+ dest +' && git clone '+ endpoint + ' '+ dest;
   var child = exec(cmd, function (err, stderr, stdout) {

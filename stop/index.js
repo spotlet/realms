@@ -7,12 +7,22 @@
 var exec = require('child_process').exec
 
 module.exports = function (args, socket) {
-  var cid = args.shift();
+  var cid = null;
+
+  if ('-h' == args[0] || '--help' == args[0]) {
+    return help(socket);
+  }
+
+  cid = args.shift();
   stop(cid, function (err, cid) {
     if (err) { socket.send(err); }
     else { socket.send(cid); }
   });
 };
+
+function help (socket) {
+  socket.send("error: usage: list [-h]");
+}
 
 function stop (cid, fn) {
   var cmd = 'docker stop '+ cid;
