@@ -17,7 +17,7 @@ module.exports = function (args, socket) {
 };
 
 function help (socket) {
-  socket.send("error: usage: ps [-h]");
+  socket.send("usage: ps [-h]");
 }
 
 function ps (args, fn) {
@@ -26,3 +26,4 @@ function ps (args, fn) {
     fn(err, stderr || stdout);
   });
 }
+

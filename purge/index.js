@@ -1,7 +1,12 @@
 
 module.exports = function (args, socket) {
 
-  console.error("Purging require cache")
+  if ('-h' == args[0] || '--help' == args[0]) {
+    return help(socket);
+  }
+
+  console.error("Purging require cache");
+
   for (var _ in require.cache) {
     console.error("purge: %s", _);
     require.cache[_] = null;
@@ -9,3 +14,7 @@ module.exports = function (args, socket) {
 
   socket.send("error: Cache purged");
 };
+
+function help (socket) {
+  socket.send("usage: purge [-h]");
+}

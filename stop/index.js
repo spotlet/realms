@@ -3,25 +3,27 @@
  * Module dependencies
  */
 
-
 var exec = require('child_process').exec
 
 module.exports = function (args, socket) {
   var cid = null;
 
   if ('-h' == args[0] || '--help' == args[0]) {
-    return help(socket);
-  }
+    help(socket);
+  } else if (0 == args.length) {
+    help(socket);
+  } else {
 
-  cid = args.shift();
-  stop(cid, function (err, cid) {
-    if (err) { socket.send(err); }
-    else { socket.send(cid); }
-  });
+    cid = args.shift();
+    stop(cid, function (err, cid) {
+      if (err) { socket.send(err); }
+      else { socket.send(cid); }
+    });
+  }
 };
 
 function help (socket) {
-  socket.send("error: usage: list [-h]");
+  socket.send("usage: list [-h]");
 }
 
 function stop (cid, fn) {

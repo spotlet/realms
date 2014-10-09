@@ -12,17 +12,19 @@ module.exports = function (args, socket) {
   var endpoint = args.shift();
 
   if ('-h' == endpoint || '--help' == endpoint) {
-    return help(socket);
+    help(socket);
+  } else if (0 == args.length) {
+    help(socket);
+  } else {
+    clone(endpoint, function (err, dest) {
+      if (err) { socket.send(err); }
+      else { socket.send(dest); }
+    });
   }
-
-  clone(endpoint, function (err, dest) {
-    if (err) { socket.send(err); }
-    else { socket.send(dest); }
-  });
 };
 
 function help (socket) {
-  socket.send("error: usage: clone [-h] <endpoint>");
+  socket.send("usage: clone [-h] <endpoint>");
 }
 
 function clone (endpoint, fn) {
