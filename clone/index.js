@@ -13,7 +13,7 @@ module.exports = function (args, socket) {
 
   if ('-h' == endpoint || '--help' == endpoint) {
     help(socket);
-  } else if (0 == args.length) {
+  } else if (null == endpoint) {
     help(socket);
   } else {
     clone(endpoint, function (err, dest) {
