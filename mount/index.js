@@ -24,8 +24,8 @@ function help (socket) {
 
 function mount (args, fn) {
   var cmd = 'spotlet-mount '+ args.concat(['-d']).join(' ');
-  var child = exec(cmd, function (err, stderr, stdout) {
-    fn(err, stderr || stdout);
+  var child = exec(cmd, function (err, stdout, stderr) {
+    fn(err, stdout);
   });
 }
 

@@ -28,7 +28,7 @@ function help (socket) {
 
 function stop (cid, fn) {
   var cmd = 'docker stop '+ cid;
-  var child = exec(cmd, function (err, stderr, stdout) {
+  var child = exec(cmd, function (err, stdout, stderr) {
     fn(err, stderr || stdout);
   });
 }

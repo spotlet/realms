@@ -27,8 +27,8 @@ function help (socket) {
 
 function status (spotlet, fn) {
   var cmd = 'cat '+ path.resolve(SPOTLET_INDEX, spotlet) +'/.status';
-  exec(cmd, function (err, stderr, stdout) {
-    fn(err, stderr || stdout);
+  exec(cmd, function (err, stdout, stderr) {
+    fn(null, err ? "error: Failed to read status for `"+spotlet+"'" : stdout);
   });
 }
 

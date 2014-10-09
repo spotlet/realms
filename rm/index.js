@@ -32,8 +32,8 @@ function rm (spotlet, fn) {
   }
 
   cmd = 'rm -rf '+ path.resolve(SPOTLET_INDEX, spotlet);
-  exec(cmd, function (err, stderr, stdout) {
-    fn(err, stderr || stdout || "rm: "+ spotlet);
+  exec(cmd, function (err, stdout, stderr) {
+    fn(err, stdout || "rm: "+ spotlet);
   });
 }
 

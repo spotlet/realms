@@ -22,8 +22,8 @@ function help (socket) {
 
 function ps (args, fn) {
   var cmd = 'docker ps -q '+ args.join(' ');
-  exec(cmd, function (err, stderr, stdout) {
-    fn(err, stderr || stdout);
+  exec(cmd, function (err, stdout, stderr) {
+    fn(err, stdout);
   });
 }
 

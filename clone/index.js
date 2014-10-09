@@ -31,7 +31,7 @@ function clone (endpoint, fn) {
   var name = path.basename(endpoint); name = name.replace('.git', '');
   var dest = SPOTLET_INDEX +'/'+ name;
   var cmd = 'rm -rf '+ dest +' && git clone '+ endpoint + ' '+ dest;
-  var child = exec(cmd, function (err, stderr, stdout) {
+  var child = exec(cmd, function (err, stdout, stderr) {
     if (err) { console.error(stderr); }
     fn(err, dest);
   });
